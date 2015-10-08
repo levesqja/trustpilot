@@ -16,15 +16,15 @@ class TrustPilot
       faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
     end
 
-    response = conn.post do |req|
+    response_rest = conn.post do |req|
       req.url '/oauth/oauth-business-users-for-applications/accesstoken' 
       req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       req.headers['Authorization'] = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
       req.body = to_body(attributes) 
     end
     
-    @access_token = response.body['access_token']
-    @response = response
+    @access_token = response_rest.body['access_token']
+    @response = response_rest
      
   end
  
