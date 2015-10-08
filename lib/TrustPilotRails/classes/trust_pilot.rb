@@ -1,6 +1,7 @@
 class TrustPilot
   
   require 'base64'
+    require 'faraday'
   @access_token = nil
  
   #TrustPilot.new({''})
