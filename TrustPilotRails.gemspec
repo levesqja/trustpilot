@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = TrustPilotRails::VERSION
   spec.authors       = ["Jalbert Levesque"]
   spec.email         = ["jalb@jalb.net"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{TrustPilot API connector.}
+  spec.description   = %q{TrustPilot API connector.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "faraday", "~> 0.9.2"
+    
 end
