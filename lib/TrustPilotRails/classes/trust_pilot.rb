@@ -32,7 +32,7 @@ class TrustPilot
     auth = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
     response_rest = client.post( to_body(attributes) , { :content_type => 'application/x-www-form-urlencoded', :authorization => auth } )
      
-    @access_token = response_rest.body['access_token']
+    @access_token = response_rest.body.to_h.symbolize_keys![:access_token]
     @response = response_rest.body
      
   end
