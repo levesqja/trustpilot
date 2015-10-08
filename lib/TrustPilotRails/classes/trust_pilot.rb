@@ -19,7 +19,7 @@ class TrustPilot
     # end
 
     auth = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
-    response_rest = resource.post '/oauth/oauth-business-users-for-applications/accesstoken' , to_body(attributes) , :content_type => 'application/x-www-form-urlencoded', :authorization => auth 
+    response_rest = resource.post '/oauth/oauth-business-users-for-applications/accesstoken' , to_body(attributes) , { :content_type => 'application/x-www-form-urlencoded', :authorization => auth } 
      
     @access_token = response_rest.body['access_token']
     @response = response_rest.body
