@@ -55,7 +55,7 @@ class TrustPilot
 
     client = get_client(full_url)
      
-    response_rest = client.get({:params => {:language => 'fr', :token => @acces_token}})
+    response_rest = client.get(:params => {:language => 'fr', :token => self.access_token)
     JSON.parse(response_rest.body)
   
   end
