@@ -3,7 +3,7 @@ class TrustPilot
   require 'base64'
   require 'rest-client'
 
-  attr_accessor :acces_token
+  attr_accessor :access_token
   attr_accessor :response 
  
   def get_client(url)
