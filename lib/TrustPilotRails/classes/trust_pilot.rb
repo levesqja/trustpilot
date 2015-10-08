@@ -4,7 +4,8 @@ class TrustPilot
   require 'faraday'
  
   @@access_token = nil
- 
+  @@response = nil
+  
   #TrustPilot.new({''})
   def initialize(attributes)
     
@@ -22,7 +23,7 @@ class TrustPilot
     end
     
     @@access_token = response.body['access_token']
-    
+    @@response = response
   end
   
   
@@ -31,6 +32,13 @@ class TrustPilot
     return @@access_token
     
   end
+  
+  def response
+    
+    return @@response
+    
+  end
+  
   
   
   def to_body(attributes)
