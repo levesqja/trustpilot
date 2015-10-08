@@ -24,6 +24,14 @@ class TrustPilot
     
   end
   
+  
+  def self.acces_token
+    
+    return @access_token
+    
+  end
+  
+  
   def to_body(attributes)
     response = Hash.new
     response['username'] = attributes['username']
