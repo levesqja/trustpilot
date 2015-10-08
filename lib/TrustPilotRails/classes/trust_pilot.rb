@@ -16,7 +16,7 @@ class TrustPilot
     response = conn.post do |req|
       req.url '/oauth/oauth-business-users-for-applications/accesstoken' 
       req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      req.headers['Authorization'] = 'Basic ' + urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
+      req.headers['Authorization'] = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
       req.body = to_body(attributes) 
     end
     
