@@ -28,7 +28,7 @@ class TrustPilot
   
   def access_token
     
-    return @access_token
+    return @@access_token
     
   end
   
