@@ -30,7 +30,7 @@ class TrustPilot
     full_url =  URL+'/oauth/oauth-business-users-for-applications/accesstoken'
 
     client = get_client(full_url)
-    
+    @api_key = attributes['api_key']
     @auth = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
     response_rest = client.post( to_body(attributes) , { :content_type => 'application/x-www-form-urlencoded', :authorization => @auth } )
      
@@ -51,11 +51,11 @@ class TrustPilot
   
   def reviews
     
-    full_url =  URL+'/reviews/latest?language=fr'
+    full_url =  URL+"/reviews/latest?language=fr&apikey=#{@api_key}"
 
     client = get_client(full_url)
      
-    response_rest = client.get( { :authorization => @auth } )
+    response_rest = client.get 
    JSON.parse(response_rest.body)
   
   end
