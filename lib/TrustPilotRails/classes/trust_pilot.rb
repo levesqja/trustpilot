@@ -1,7 +1,8 @@
 class TrustPilot
   
   require 'base64'
-    require 'faraday'
+  require 'faraday'
+ 
   @access_token = nil
  
   #TrustPilot.new({''})
@@ -25,7 +26,7 @@ class TrustPilot
   end
   
   
-  def self.acces_token
+  def access_token
     
     return @access_token
     
