@@ -3,8 +3,9 @@ class TrustPilot
   require 'base64'
   require 'faraday'
  
-  @@access_token = nil
-  @@response = nil
+  attr_accessor :acces_token
+  attr_accessor :response 
+ 
   
   #TrustPilot.new({''})
   def initialize(attributes)
@@ -22,25 +23,11 @@ class TrustPilot
       req.body = to_body(attributes) 
     end
     
-    @@access_token = response.body['access_token']
-    @@response = response
+    self.access_token = response.body['access_token']
+    self.response = response
+     
   end
-  
-  
-  def access_token
-    
-    return @@access_token
-    
-  end
-  
-  def response
-    
-    return @@response
-    
-  end
-  
-  
-  
+ 
   def to_body(attributes)
     response = Hash.new
     response['username'] = attributes['username']
