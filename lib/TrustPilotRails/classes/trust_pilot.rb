@@ -6,7 +6,7 @@ class TrustPilot
   attr_accessor :access_token
   attr_accessor :response 
  
-  URL = 'https://api.trustpilot.com/v1'
+     URL = 'https://api.trustpilot.com/v1'
      
   def get_client(url)
     return RestClient::Resource.new(
@@ -16,6 +16,10 @@ class TrustPilot
   
   #TrustPilot.new({''})
   def initialize(attributes)
+    
+    
+    
+
     
     # conn = Faraday.new(:url => 'https://api.trustpilot.com/v1') do |faraday|
     #   faraday.request  :url_encoded             # form-encode POST params
@@ -27,8 +31,8 @@ class TrustPilot
 
     client = get_client(full_url)
     
-    auth = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
-    response_rest = client.post( to_body(attributes) , { :content_type => 'application/x-www-form-urlencoded', :authorization => auth } )
+    @auth = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
+    response_rest = client.post( to_body(attributes) , { :content_type => 'application/x-www-form-urlencoded', :authorization => @auth } )
      
     @access_token = JSON.parse(response_rest.body)['access_token']
     @response = response_rest.body
@@ -47,12 +51,12 @@ class TrustPilot
   
   def reviews
     
-    full_url =  URL+'/reviews/latest'
+    full_url =  URL+'/reviews/latest?language=fr'
 
     client = get_client(full_url)
      
-    response_rest = client.get(:params => {:language => 'fr', :token => self.access_token})
-    JSON.parse(response_rest.body)
+    response_rest = client.get( { :authorization => @auth } )
+   JSON.parse(response_rest.body)
   
   end
   
