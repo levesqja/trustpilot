@@ -3,7 +3,7 @@ class TrustPilot
   require 'base64'
   require 'faraday'
  
-  @access_token = nil
+  @@access_token = nil
  
   #TrustPilot.new({''})
   def initialize(attributes)
@@ -21,7 +21,7 @@ class TrustPilot
       req.body = to_body(attributes) 
     end
     
-    @access_token = response.body['access_token']
+    @@access_token = response.body['access_token']
     
   end
   
