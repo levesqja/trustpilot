@@ -6,11 +6,18 @@ class TrustPilot
   attr_accessor :acces_token
   attr_accessor :response 
  
+  def get_client(url)
+    return RestClient::Resource.new(
+    url
+    ) 
+  end
   
   #TrustPilot.new({''})
   def initialize(attributes)
     
-    resource = RestClient::Resource.new 'https://api.trustpilot.com/v1'
+    
+    
+    url = 'https://api.trustpilot.com/v1'
     
     # conn = Faraday.new(:url => 'https://api.trustpilot.com/v1') do |faraday|
     #   faraday.request  :url_encoded             # form-encode POST params
@@ -18,8 +25,12 @@ class TrustPilot
     #   faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
     # end
 
+    full_url =  url+'/oauth/oauth-business-users-for-applications/accesstoken'
+
+    client = get_client(full_url)
+    
     auth = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
-    response_rest = resource.post '/oauth/oauth-business-users-for-applications/accesstoken' , to_body(attributes) , { :content_type => 'application/x-www-form-urlencoded', :authorization => auth } 
+    response_rest = client.post( to_body(attributes) , { :content_type => 'application/x-www-form-urlencoded', :authorization => auth } )
      
     @access_token = response_rest.body['access_token']
     @response = response_rest.body
