@@ -1,8 +1,8 @@
 class TrustPilot
   
   require 'base64'
-  require 'faraday'
- 
+  require 'rest-client'
+
   attr_accessor :acces_token
   attr_accessor :response 
  
@@ -10,21 +10,19 @@ class TrustPilot
   #TrustPilot.new({''})
   def initialize(attributes)
     
-    conn = Faraday.new(:url => 'https://api.trustpilot.com/v1') do |faraday|
-      faraday.request  :url_encoded             # form-encode POST params
-      faraday.response :logger                  # log requests to STDOUT
-      faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
-    end
-
-    response_rest = conn.post do |req|
-      req.url '/oauth/oauth-business-users-for-applications/accesstoken' 
-      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      req.headers['Authorization'] = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
-      req.body = to_body(attributes) 
-    end
+    resource = RestClient::Resource.new 'https://api.trustpilot.com/v1'
     
+    # conn = Faraday.new(:url => 'https://api.trustpilot.com/v1') do |faraday|
+    #   faraday.request  :url_encoded             # form-encode POST params
+    #   faraday.response :logger                  # log requests to STDOUT
+    #   faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
+    # end
+
+    auth = 'Basic ' + Base64.urlsafe_encode64( attributes['api_key'] + ':' + attributes['api_secret'] )
+    response_rest = resource.post '/oauth/oauth-business-users-for-applications/accesstoken' , to_body(attributes) , :content_type => 'application/x-www-form-urlencoded', :authorization => auth 
+     
     @access_token = response_rest.body['access_token']
-    @response = response_rest
+    @response = response_rest.body
      
   end
  
@@ -34,20 +32,19 @@ class TrustPilot
     response['password'] = attributes['password']
     response['grant_type'] = 'password'
     
- 
     response
   end
   
   
   def self.reviews
     
-    response = conn.get do |req|                           # GET http://sushi.com/search?page=2&limit=100
-      req.url '/reviews/latest'
-      req.params['language'] = 'fr'
-      req.param['token'] = @acces_token
-    end
-    
-    response.body
+    # response = conn.get do |req|                           # GET http://sushi.com/search?page=2&limit=100
+    #   req.url '/reviews/latest'
+    #   req.params['language'] = 'fr'
+    #   req.param['token'] = @acces_token
+    # end
+    #
+    # response.body
     
   end
   
