@@ -23,8 +23,8 @@ class TrustPilot
       req.body = to_body(attributes) 
     end
     
-    self.access_token = response.body['access_token']
-    self.response = response
+    @access_token = response.body['access_token']
+    @response = response
      
   end
  
