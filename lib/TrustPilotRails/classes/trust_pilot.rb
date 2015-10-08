@@ -17,10 +17,6 @@ class TrustPilot
   #TrustPilot.new({''})
   def initialize(attributes)
     
-    
-    
-
-    
     # conn = Faraday.new(:url => 'https://api.trustpilot.com/v1') do |faraday|
     #   faraday.request  :url_encoded             # form-encode POST params
     #   faraday.response :logger                  # log requests to STDOUT
@@ -55,7 +51,7 @@ class TrustPilot
 
     client = get_client(full_url)
      
-    response_rest = client.get(:params => {:language => 'fr', :token => self.access_token)
+    response_rest = client.get(:params => {:language => 'fr', :token => self.access_token})
     JSON.parse(response_rest.body)
   
   end
