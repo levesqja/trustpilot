@@ -6,6 +6,8 @@ class TrustPilot
   attr_accessor :access_token
   attr_accessor :response 
  
+  URL = 'https://api.trustpilot.com/v1'
+     
   def get_client(url)
     return RestClient::Resource.new(
     url
@@ -17,7 +19,7 @@ class TrustPilot
     
     
     
-    url = 'https://api.trustpilot.com/v1'
+
     
     # conn = Faraday.new(:url => 'https://api.trustpilot.com/v1') do |faraday|
     #   faraday.request  :url_encoded             # form-encode POST params
@@ -25,7 +27,7 @@ class TrustPilot
     #   faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
     # end
 
-    full_url =  url+'/oauth/oauth-business-users-for-applications/accesstoken'
+    full_url =  URL+'/oauth/oauth-business-users-for-applications/accesstoken'
 
     client = get_client(full_url)
     
@@ -47,16 +49,15 @@ class TrustPilot
   end
   
   
-  def self.reviews
+  def reviews
     
-    # response = conn.get do |req|                           # GET http://sushi.com/search?page=2&limit=100
-    #   req.url '/reviews/latest'
-    #   req.params['language'] = 'fr'
-    #   req.param['token'] = @acces_token
-    # end
-    #
-    # response.body
-    
+    full_url =  URL+'/reviews/latest'
+
+    client = get_client(full_url)
+     
+    response_rest = client.get({:params => {:language => 'fr', :token => @acces_token}})
+    JSON.parse(response_rest.body)
+  
   end
   
 end
